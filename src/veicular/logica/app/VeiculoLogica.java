@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import veicular.funcoes.FuncoesData;
 import veicular.logica.dominio.Aeronave;
 import veicular.logica.dominio.Embarcacoes;
 import veicular.logica.dominio.Terrestres;
@@ -17,6 +18,7 @@ import veicular.logica.persistencia.sql.VeiculoDaoSql;
 public class VeiculoLogica implements VeiculoLogicaIF{
 	
 	private VeiculoDaoIF VeiculoDao;
+	private FuncoesData funcao;
 
 	@Override
 	public void addVeiculo(String descricao, String placa, int anoFabricacao, int classe, double valorCompra) throws Exception {
@@ -34,6 +36,7 @@ public class VeiculoLogica implements VeiculoLogicaIF{
 			int anoFabricacao, double valorCompra) throws Exception{
 		this.VeiculoDao = new VeiculoDaoSql();
 		Aeronave aeronave = new Aeronave(descricao, placa, anoFabricacao, valorCompra);
+		System.out.println("anos: "+aeronave.getBaseCalculo());
 		this.VeiculoDao.salvar(aeronave);
 		
 	}
@@ -41,7 +44,7 @@ public class VeiculoLogica implements VeiculoLogicaIF{
 	public void addEmbarcacoes(String descricao, String placa, int anoFabricacao, double valorCompra) throws Exception{
 		this.VeiculoDao = new VeiculoDaoSql();
 		Embarcacoes embarcacoes = new Embarcacoes(descricao, placa, anoFabricacao, valorCompra);
-		System.out.println(descricao);
+		System.out.println("base de calculo: "+embarcacoes.getBaseCalculo());
 		this.VeiculoDao.salvar(embarcacoes);
 	}	
 	
@@ -49,6 +52,7 @@ public class VeiculoLogica implements VeiculoLogicaIF{
 	public void addTerrestres(String descricao, String placa, int anoFabricacao, double valorCompra) throws Exception {
 		this.VeiculoDao = new VeiculoDaoSql();
 		Terrestres terrestre = new Terrestres(descricao, placa, anoFabricacao, valorCompra);
+		System.out.println("base : "+terrestre.getBaseCalculo());
 		this.VeiculoDao.salvar(terrestre);
 	}
 	
@@ -74,6 +78,11 @@ public class VeiculoLogica implements VeiculoLogicaIF{
 	@Override
 	public void removerVeiculo(String placa) throws Exception {
 		this.VeiculoDao.remove(placa);
+	}
+
+	@Override
+	public int buscaAno() {	
+		return (new FuncoesData().getAno());
 	}
 
 }

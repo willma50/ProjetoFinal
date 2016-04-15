@@ -12,5 +12,5 @@ public interface VeiculoLogicaIF {
 	public Collection<String> findAll() throws Exception;
 	public void setPersistencia(VeiculoDaoIF veiculoDAO);
 	public void removerVeiculo(String placa) throws Exception;
-	
+	public int buscaAno();
 }

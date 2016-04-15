@@ -22,7 +22,7 @@ public class FuncoesData {
 	
 	public int getAno(){
 		Calendar c = Calendar.getInstance(); //teste4
-		return Calendar.DAY_OF_YEAR;
+		return c.get(Calendar.YEAR);
 	}
 	
 	//dataAtual = new java.text.SimpleDateFormat("dd.MM.yyyy").format(new java.util.Date());

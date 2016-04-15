@@ -4,5 +4,5 @@ CREATE TABLE veiculo
   classe integer,
   anofabricacao integer,
   placa character varying(100),
-  valorCompra double
+  valorCompra float
 )

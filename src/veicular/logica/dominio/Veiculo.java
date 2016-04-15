@@ -32,12 +32,12 @@ public abstract class Veiculo {
 	public abstract double setImpostoDevido();
 	
 	public double getBaseCalculo(){
-		//a base de cálculo é o valor de compra do bem, amortizado à taxa de 5% ao ano.
-		//2014 - 2016 = 2anos  // pegar ano atual em java e fazer um while com o ano
-		double base = 0;
+		double base = 0, valor = this.getValorCompra();
 		int i = 0;
-		while(new FuncoesData().getAno() > i){
-			base += this.getValorCompra() - (5/100);
+		int qtdAno = (new FuncoesData().getAno()) - this.getAnoFabricacao();
+		while(qtdAno > i){
+			base = valor - (valor * (0.05));
+			valor = base;
 			i++;
 		}
 		return base;

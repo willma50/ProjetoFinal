@@ -24,7 +24,7 @@ public class VeiculoDaoSql extends DBDAO implements VeiculoDaoIF{
 	private static final int TIPO_OUTRO = 3;
 	
 	private static final String INSERT_VEICULO = "INSERT INTO VEICULO (DESCRICAO, PLACA, ANOFABRICACAO, CLASSE, valorCompra) VALUES (?, ?, ?, ?, ?)";
-	private static final String UPDATE_VEICULO = "UPDATE veiculo SET DESCRICAO = ?, ANOFABRICACAO = ?, valorCompra = ?  where PLACA = ?";
+	private static final String UPDATE_VEICULO = "UPDATE veiculo SET DESCRICAO = ?, ANOFABRICACAO = ?  where PLACA = ?";
 	private static final String FINDBYNOME = "select DESCRICAO, CLASSE, PLACA, ANOFABRICACAO, valorCompra from veiculo where PLACA = ?";
 	private static final String FINDALL = "select DESCRICAO, CLASSE, PLACA, ANOFABRICACAO, valorCompra from veiculo";
 	private static final String DELETE = "delete from veiculo where placa = ?";
@@ -49,15 +49,15 @@ public class VeiculoDaoSql extends DBDAO implements VeiculoDaoIF{
 		pstam.setInt(2, veiculo.getAnoFabricacao());
 		pstam.setString(3, veiculo.getPlaca());
 		
-		if(veiculo.getClass().equals(Aeronave.class))
-			pstam.setInt(4, VeiculoDaoSql.TIPO_AERONAVE);
+		/*if(veiculo.getClass().equals(Aeronave.class))
+			pstam.setInt(3, VeiculoDaoSql.TIPO_AERONAVE);
 		else if(veiculo.getClass().equals(Embarcacoes.class))
-			pstam.setInt(4, VeiculoDaoSql.TIPO_EMBARCACOES);
+			pstam.setInt(3, VeiculoDaoSql.TIPO_EMBARCACOES);
 		else if (veiculo.getClass().equals(Terrestres.class))
-			pstam.setInt(4, VeiculoDaoSql.TIPO_TERRESTRE);
+			pstam.setInt(3, VeiculoDaoSql.TIPO_TERRESTRE);
 		else
-			pstam.setInt(4, VeiculoDaoSql.TIPO_OUTRO);
-		
+			pstam.setInt(3, VeiculoDaoSql.TIPO_OUTRO);*/
+		System.out.println(pstam.toString());
 		
 		pstam.executeUpdate();
 		pstam.close();
@@ -97,7 +97,7 @@ public class VeiculoDaoSql extends DBDAO implements VeiculoDaoIF{
 		pstam.setString(1, placa);
 		ResultSet rs = pstam.executeQuery();
 		Veiculo veiculo = null;
-		
+		System.out.println(pstam.toString());
 		if(rs.next()){
 			
 			if(rs.getInt("CLASSE") == 0)			
@@ -110,7 +110,7 @@ public class VeiculoDaoSql extends DBDAO implements VeiculoDaoIF{
 			//else veiculo = new Terrestres(rs.getString("DESCRICAO"), rs.getString("PLACA"), rs.getInt("ANOFABRICACAO"));
 			
 		}
-		System.out.println(veiculo);
+	
 		rs.close();
 		pstam.close();
 		conn.close();

@@ -54,11 +54,11 @@ public class Principal extends JFrame implements VeiculoUIIF, ActionListener{
 		veiculo.add(cadastrar);
 		veiculo.add(consultar);		
 		veiculo.add(remover);
-		//veiculo.add(consultaNome);
+		veiculo.add(consultaNome);
 		
 		consultar.addActionListener(this);
 		cadastrar.addActionListener(this);
-				
+		consultaNome.addActionListener(this);		
 	}
 
 	@Override
@@ -77,7 +77,7 @@ public class Principal extends JFrame implements VeiculoUIIF, ActionListener{
 		if(e.getSource() == cadastrar){
 				
 			try {
-				this.appLogica.addVeiculo("Veiculo1", "teste placa", 20009, 1, 10000);
+				this.appLogica.addVeiculo("Veiculo1", "teste placa2", 2009, 1, 10000);
 			} catch (Exception e1) {
 				System.out.println("Erro cadastro!");
 				e1.printStackTrace();
@@ -90,6 +90,10 @@ public class Principal extends JFrame implements VeiculoUIIF, ActionListener{
 				System.out.println("Erro remoção!");
 				e1.printStackTrace();
 			}
+		 }else{
+			 System.out.println("ano:");
+			 System.out.println(this.appLogica.buscaAno());
+			 
 		 }
 		
 	}
