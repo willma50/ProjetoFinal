@@ -38,7 +38,7 @@ public class CadastrarVeiculo extends JPanel {
 		
 		table = new JTable();
 		add(table);
-		app.addVeiculo("SIENA", "MGE-3654", 2006, 1);
+		app.addVeiculo("SIENA", "MGE-3654", 2006, 1, 20000);
 		
 	}
 

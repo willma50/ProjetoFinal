@@ -19,36 +19,36 @@ public class VeiculoLogica implements VeiculoLogicaIF{
 	private VeiculoDaoIF VeiculoDao;
 
 	@Override
-	public void addVeiculo(String descricao, String placa, int anoFabricacao, int classe) throws Exception {
+	public void addVeiculo(String descricao, String placa, int anoFabricacao, int classe, double valorCompra) throws Exception {
 		
 		if(classe == 0)
-			this.addAeronave(descricao, placa, anoFabricacao);
+			this.addAeronave(descricao, placa, anoFabricacao, valorCompra);
 		if(classe == 1)
-			this.addEmbarcacoes(descricao, placa, anoFabricacao);
+			this.addEmbarcacoes(descricao, placa, anoFabricacao, valorCompra);
 		if(classe == 2)
-			this.addTerrestres(descricao, placa, anoFabricacao);
+			this.addTerrestres(descricao, placa, anoFabricacao, valorCompra);
 			
 	}
 	
 	public void addAeronave(String descricao, String placa,
-			int anoFabricacao) throws Exception{
+			int anoFabricacao, double valorCompra) throws Exception{
 		this.VeiculoDao = new VeiculoDaoSql();
-		Aeronave aeronave = new Aeronave(descricao, placa, anoFabricacao);
+		Aeronave aeronave = new Aeronave(descricao, placa, anoFabricacao, valorCompra);
 		this.VeiculoDao.salvar(aeronave);
 		
 	}
 	
-	public void addEmbarcacoes(String descricao, String placa, int anoFabricacao) throws Exception{
+	public void addEmbarcacoes(String descricao, String placa, int anoFabricacao, double valorCompra) throws Exception{
 		this.VeiculoDao = new VeiculoDaoSql();
-		Embarcacoes embarcacoes = new Embarcacoes(descricao, placa, anoFabricacao);
+		Embarcacoes embarcacoes = new Embarcacoes(descricao, placa, anoFabricacao, valorCompra);
 		System.out.println(descricao);
 		this.VeiculoDao.salvar(embarcacoes);
 	}	
 	
 	
-	public void addTerrestres(String descricao, String placa, int anoFabricacao) throws Exception {
+	public void addTerrestres(String descricao, String placa, int anoFabricacao, double valorCompra) throws Exception {
 		this.VeiculoDao = new VeiculoDaoSql();
-		Terrestres terrestre = new Terrestres(descricao, placa, anoFabricacao);
+		Terrestres terrestre = new Terrestres(descricao, placa, anoFabricacao, valorCompra);
 		this.VeiculoDao.salvar(terrestre);
 	}
 	

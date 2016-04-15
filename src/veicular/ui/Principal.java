@@ -20,13 +20,12 @@ public class Principal extends JFrame implements VeiculoUIIF, ActionListener{
 	public Panel painel = new Panel();
 	JMenuBar barra; 
 	JMenu manutencao, veiculo, sair;
-	JMenuItem cadastrar, consultar;
-	
+	JMenuItem cadastrar, consultar, remover, consultaNome; //obs: não terá menu para remover 
+												//vi ser na tela de listagem
 	private VeiculoLogicaIF appLogica;
 	
 	public Principal(){		
 		super("Tela inicial");
-	
 	}
 	
 	public void montarTela() {
@@ -46,12 +45,16 @@ public class Principal extends JFrame implements VeiculoUIIF, ActionListener{
 		sair = new JMenu("Sair");		
 		cadastrar = new JMenuItem("Cadastrar");
 		consultar = new JMenuItem("Consultar");		
+		remover = new JMenuItem("Remover");
+		consultaNome = new JMenuItem("Consulta Por Nome");
 		
 		barra.add(manutencao);
 		barra.add(sair);
 		manutencao.add(veiculo);		
 		veiculo.add(cadastrar);
 		veiculo.add(consultar);		
+		veiculo.add(remover);
+		//veiculo.add(consultaNome);
 		
 		consultar.addActionListener(this);
 		cadastrar.addActionListener(this);
@@ -71,15 +74,24 @@ public class Principal extends JFrame implements VeiculoUIIF, ActionListener{
 			}		
 		}else
 			
-			if(e.getSource() == cadastrar){
+		if(e.getSource() == cadastrar){
 				
-				try {
-					this.appLogica.addVeiculo("Veiculo1", "teste placa", 20009, 1);
-				} catch (Exception e1) {
-					System.out.println("Erro cadastro!");
-					e1.printStackTrace();
-				}	
+			try {
+				this.appLogica.addVeiculo("Veiculo1", "teste placa", 20009, 1, 10000);
+			} catch (Exception e1) {
+				System.out.println("Erro cadastro!");
+				e1.printStackTrace();
+			}	
+		}else
+		 if(e.getSource() == remover){
+			 try {
+				this.appLogica.removerVeiculo("teste placa");
+			} catch (Exception e1) {
+				System.out.println("Erro remoção!");
+				e1.printStackTrace();
 			}
+		 }
+		
 	}
 	
 	@Override

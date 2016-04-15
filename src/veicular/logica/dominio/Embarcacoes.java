@@ -2,16 +2,16 @@ package veicular.logica.dominio;
 
 public class Embarcacoes extends Veiculo{
 
+	private static final double aliquota = 3.5;
 	
 	public Embarcacoes(String descricao, String placa,
-			int anoFabricacao) {
-		super(descricao, placa, anoFabricacao);
+			int anoFabricacao, double  valorCompra) {
+		super(descricao, placa, anoFabricacao, valorCompra);
 	}
 
 	@Override
 	public double setImpostoDevido() {
-		// TODO Auto-generated method stub
-		return 0;
+		return Embarcacoes.aliquota * this.getBaseCalculo();
 	}
 
 }

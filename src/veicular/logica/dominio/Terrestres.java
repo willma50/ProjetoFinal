@@ -2,14 +2,15 @@ package veicular.logica.dominio;
 
 public class Terrestres extends Veiculo{
 
-	public Terrestres(String descricao, String placa, int anoFabricacao) {
-		super(descricao, placa, anoFabricacao);
+	private static final double aliquota = 1.0; 
+	
+	public Terrestres(String descricao, String placa, int anoFabricacao, double valorCompra) {
+		super(descricao, placa, anoFabricacao, valorCompra);
 	}
 
 	@Override
 	public double setImpostoDevido() {
-		// TODO Auto-generated method stub
-		return 0;
+		return Terrestres.aliquota * this.getAnoFabricacao();
 	}
 
 }
