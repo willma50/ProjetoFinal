@@ -5,10 +5,10 @@ import veicular.funcoes.FuncoesData;
 public abstract class Veiculo {
 	
 	private int id;
-	private String descricao;
 	private String placa;
 	private int anoFabricacao;
 	private double valorCompra;
+	private Proprietario proprietario;
 	
 	private FuncoesData funcao;
 	
@@ -16,15 +16,14 @@ public abstract class Veiculo {
 		
 	}
 	
-	public Veiculo(String descricao, String placa, int anoFabricacao, double valorCompra){
-		this.setDescricao(descricao);
+	public Veiculo(String placa, int anoFabricacao, double valorCompra, Proprietario proprietario){
 		this.setPlaca(placa);
 		this.setAnoFabricacao(anoFabricacao);		
 		this.setValorCompra(valorCompra);
+		this.proprietario = proprietario;
 	}
 	
-	public Veiculo(String descricao, String placa, int anoFabricacao){
-		this.setDescricao(descricao);
+	public Veiculo(String placa, int anoFabricacao){
 		this.setPlaca(placa);
 		this.setAnoFabricacao(anoFabricacao);		
 	}
@@ -57,12 +56,6 @@ public abstract class Veiculo {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getDescricao() {
-		return descricao;
-	}
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
 	
 	public String getPlaca() {
 		return placa;
@@ -78,6 +71,14 @@ public abstract class Veiculo {
 	
 	public void setAnoFabricacao(int anoFabricacao) {
 		this.anoFabricacao = anoFabricacao;
+	}
+
+	public Proprietario getProprietario() {
+		return proprietario;
+	}
+
+	public void setProprietario(Proprietario proprietario) {
+		this.proprietario = proprietario;
 	}
 	
 	

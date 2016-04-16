@@ -23,12 +23,13 @@ public class VeiculoDaoSql extends DBDAO implements VeiculoDaoIF{
 	private static final int TIPO_TERRESTRE = 2;
 	private static final int TIPO_OUTRO = 3;
 	
-	private static final String INSERT_VEICULO = "INSERT INTO VEICULO (DESCRICAO, PLACA, ANOFABRICACAO, CLASSE, valorCompra) VALUES (?, ?, ?, ?, ?)";
-	private static final String UPDATE_VEICULO = "UPDATE veiculo SET DESCRICAO = ?, ANOFABRICACAO = ?  where PLACA = ?";
-	private static final String FINDBYNOME = "select DESCRICAO, CLASSE, PLACA, ANOFABRICACAO, valorCompra from veiculo where PLACA = ?";
-	private static final String FINDALL = "select DESCRICAO, CLASSE, PLACA, ANOFABRICACAO, valorCompra from veiculo";
+	private static final String INSERT_VEICULO = "INSERT INTO VEICULO (PLACA, ANOFABRICACAO, CLASSE, valorCompra, proprietario) VALUES (?, ?, ?, ?, ?)";
+	private static final String UPDATE_VEICULO = "UPDATE veiculo SET ANOFABRICACAO = ?  where PLACA = ?";
+	private static final String FINDBYNOME = "select CLASSE, PLACA, ANOFABRICACAO, valorCompra, proprietario from veiculo where PLACA = ?";
+	private static final String FINDALL = "select CLASSE, PLACA, ANOFABRICACAO, valorCompra, proprietario from veiculo";
 	private static final String DELETE = "delete from veiculo where placa = ?";
 	
+	private ProprietarioDaoSql proprietarioDao;
 	
 	@Override
 	public void salvar(Veiculo veiculo) throws Exception {
@@ -45,9 +46,8 @@ public class VeiculoDaoSql extends DBDAO implements VeiculoDaoIF{
 		
 		Connection conn = this.getConnection();
 		PreparedStatement pstam = conn.prepareStatement(UPDATE_VEICULO);
-		pstam.setString(1, veiculo.getDescricao());
-		pstam.setInt(2, veiculo.getAnoFabricacao());
-		pstam.setString(3, veiculo.getPlaca());
+		pstam.setInt(1, veiculo.getAnoFabricacao());
+		pstam.setString(2, veiculo.getPlaca());
 		
 		/*if(veiculo.getClass().equals(Aeronave.class))
 			pstam.setInt(3, VeiculoDaoSql.TIPO_AERONAVE);
@@ -69,20 +69,20 @@ public class VeiculoDaoSql extends DBDAO implements VeiculoDaoIF{
 		
 		Connection conn = this.getConnection();
 		PreparedStatement pstam = conn.prepareStatement(INSERT_VEICULO);
-		pstam.setString(1, veiculo.getDescricao());
-		pstam.setString(2, veiculo.getPlaca());
-		pstam.setInt(3, veiculo.getAnoFabricacao());
+		pstam.setString(1, veiculo.getPlaca());
+		pstam.setInt(2, veiculo.getAnoFabricacao());
 
 		if(veiculo.getClass().equals(Aeronave.class))
-			pstam.setInt(4, VeiculoDaoSql.TIPO_AERONAVE);
+			pstam.setInt(3, VeiculoDaoSql.TIPO_AERONAVE);
 		else if(veiculo.getClass().equals(Embarcacoes.class))
-			pstam.setInt(4, VeiculoDaoSql.TIPO_EMBARCACOES);
+			pstam.setInt(3, VeiculoDaoSql.TIPO_EMBARCACOES);
 		else if (veiculo.getClass().equals(Terrestres.class))
-			pstam.setInt(4, VeiculoDaoSql.TIPO_TERRESTRE);
+			pstam.setInt(3, VeiculoDaoSql.TIPO_TERRESTRE);
 		else
-			pstam.setInt(4, VeiculoDaoSql.TIPO_OUTRO);
+			pstam.setInt(3, VeiculoDaoSql.TIPO_OUTRO);
 		
-		pstam.setDouble(5, veiculo.getValorCompra());
+		pstam.setDouble(4, veiculo.getValorCompra());
+		pstam.setString(5, veiculo.getProprietario().getNome());
 		
 		pstam.executeUpdate();
 		pstam.close();
@@ -97,15 +97,15 @@ public class VeiculoDaoSql extends DBDAO implements VeiculoDaoIF{
 		pstam.setString(1, placa);
 		ResultSet rs = pstam.executeQuery();
 		Veiculo veiculo = null;
-		System.out.println(pstam.toString());
-		if(rs.next()){
-			
+		
+		if(rs.next()){			
+			proprietarioDao = new ProprietarioDaoSql();
 			if(rs.getInt("CLASSE") == 0)			
-				veiculo = new Aeronave(rs.getString("DESCRICAO"), rs.getString("PLACA"), rs.getInt("ANOFABRICACAO"), rs.getDouble("valorCompra"));			
+				veiculo = new Aeronave(rs.getString("PLACA"), rs.getInt("ANOFABRICACAO"), rs.getDouble("valorCompra"), proprietarioDao.findByNome(rs.getString("proprietario")));			
 			else if(rs.getInt("CLASSE") == 1	)		
-				veiculo = new Embarcacoes(rs.getString("DESCRICAO"), rs.getString("PLACA"), rs.getInt("ANOFABRICACAO"), rs.getDouble("valorCompra"));
+				veiculo = new Embarcacoes(rs.getString("PLACA"), rs.getInt("ANOFABRICACAO"), rs.getDouble("valorCompra"), proprietarioDao.findByNome(rs.getString("proprietario")));
 			else if(rs.getInt("CLASSE") == 2	)		
-				veiculo = new Terrestres(rs.getString("DESCRICAO"), rs.getString("PLACA"), rs.getInt("ANOFABRICACAO"), rs.getDouble("valorCompra"));
+				veiculo = new Terrestres(rs.getString("PLACA"), rs.getInt("ANOFABRICACAO"), rs.getDouble("valorCompra"), proprietarioDao.findByNome(rs.getString("proprietario")));
 			
 			//else veiculo = new Terrestres(rs.getString("DESCRICAO"), rs.getString("PLACA"), rs.getInt("ANOFABRICACAO"));
 			
@@ -125,16 +125,17 @@ public class VeiculoDaoSql extends DBDAO implements VeiculoDaoIF{
 		ResultSet rs = pstam.executeQuery();
 		List<Veiculo> listVeiculo = new ArrayList<>();	
 		Veiculo veiculo = null;
+		proprietarioDao = new ProprietarioDaoSql();
 		while(rs.next()){
 			
 			if(rs.getInt("CLASSE") == 0)			
-				veiculo = new Aeronave(rs.getString("DESCRICAO"),  rs.getString("PLACA"), rs.getInt("ANOFABRICACAO"), rs.getDouble("valorCompra"));
+				veiculo = new Aeronave(rs.getString("PLACA"), rs.getInt("ANOFABRICACAO"), rs.getDouble("valorCompra"), proprietarioDao.findByNome(rs.getString("proprietario")));
 			
 			else if(rs.getInt("CLASSE") == 1	)		
-				veiculo = new Embarcacoes(rs.getString("DESCRICAO"), rs.getString("PLACA"), rs.getInt("ANOFABRICACAO"), rs.getDouble("valorCompra"));
+				veiculo = new Embarcacoes(rs.getString("PLACA"), rs.getInt("ANOFABRICACAO"), rs.getDouble("valorCompra"), proprietarioDao.findByNome(rs.getString("proprietario")));
 			
 			else if(rs.getInt("CLASSE") == 2	)		
-				veiculo = new Terrestres(rs.getString("DESCRICAO"), rs.getString("PLACA"), rs.getInt("ANOFABRICACAO"), rs.getDouble("valorCompra"));
+				veiculo = new Terrestres(rs.getString("PLACA"), rs.getInt("ANOFABRICACAO"), rs.getDouble("valorCompra"), proprietarioDao.findByNome(rs.getString("proprietario")));
 			
 			listVeiculo.add(veiculo);
 		}

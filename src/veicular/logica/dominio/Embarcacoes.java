@@ -4,9 +4,9 @@ public class Embarcacoes extends Veiculo{
 
 	private static final double aliquota = 3.5;
 	
-	public Embarcacoes(String descricao, String placa,
-			int anoFabricacao, double  valorCompra) {
-		super(descricao, placa, anoFabricacao, valorCompra);
+	public Embarcacoes(String placa,
+			int anoFabricacao, double  valorCompra, Proprietario proprietario) {
+		super(placa, anoFabricacao, valorCompra, proprietario);
 	}
 
 	@Override

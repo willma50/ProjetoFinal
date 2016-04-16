@@ -77,7 +77,7 @@ public class Principal extends JFrame implements VeiculoUIIF, ActionListener{
 		if(e.getSource() == cadastrar){
 				
 			try {
-				this.appLogica.addVeiculo("Veiculo1", "teste placa2", 2009, 1, 10000);
+				this.appLogica.addVeiculo("teste placa2", 2009, 1, 10000, "Maria");
 			} catch (Exception e1) {
 				System.out.println("Erro cadastro!");
 				e1.printStackTrace();

@@ -58,9 +58,6 @@ public class VeiculoTableModel extends AbstractTableModel{
 		System.out.println("testando6\n");
 		Veiculo veic = linhas.get(rowIndex);
 		
-		if (columnIndex == COL_DESCRICAO)
-			return veic.getDescricao();
-		else
 		if (columnIndex == COL_PLACA)
 			return veic.getPlaca();
 		else
@@ -74,10 +71,7 @@ public class VeiculoTableModel extends AbstractTableModel{
 		System.out.println("testando7\n");
 		Veiculo veic = linhas.get(row); 
 		
-		if (column == COL_DESCRICAO){
-			veic.setDescricao(aValue.toString());
-		} 
-		 else if (column == COL_PLACA) { 
+		 if (column == COL_PLACA) { 
 			veic.setPlaca(aValue.toString()); 
 		} else if (column == COL_ANOFABRICACAO) {
 			veic.setAnoFabricacao((Integer) aValue); 

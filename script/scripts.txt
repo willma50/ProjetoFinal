@@ -1,8 +1,14 @@
 CREATE TABLE veiculo
 (
-  descricao character varying(200) NOT NULL,
+  proprietario character varying(200) NULL,
   classe integer,
   anofabricacao integer,
   placa character varying(100),
   valorCompra float
+)
+
+CREATE TABLE proprietario
+(
+  nome character varying(200) NOT NULL,
+  ncs character varying(100)
 )
