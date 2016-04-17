@@ -33,13 +33,10 @@ public class InitData {
 		pStmt.executeUpdate();
 		pStmt.setLong(1, 110); pStmt.setString(2, "Imoveis"); pStmt.setDouble(3, 0); pStmt.setInt(4, 0);
 		pStmt.executeUpdate();
-		
-	
-
 
 		System.out.println("Banco Preparado...");
 	}
-	
+
 	public static void main(String[] args) throws SQLException {
 		(new InitData()).run();
 	}

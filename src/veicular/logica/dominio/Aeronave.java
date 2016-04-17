@@ -5,7 +5,12 @@ public class Aeronave extends Veiculo{
 	private static final double aliquota = 2.5;
 	
 	public Aeronave(String placa,
-			int anoFabricacao, double  valorCompra, Proprietario proprietario) {
+			int anoFabricacao, double  valorCompra, Proprietario proprietario, int frota) {
+		super(placa, anoFabricacao, valorCompra, proprietario);
+	}
+	
+	public Aeronave(String placa,
+			int anoFabricacao, double  valorCompra, Proprietario proprietario){
 		super(placa, anoFabricacao, valorCompra, proprietario);
 	}
 

@@ -78,7 +78,6 @@ public class JInicialUI extends JFrame implements VeiculoUIIF, ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e){
 		if (e.getSource() == cadastrarMenuItem){
-			System.out.println("cadastro");
 		    JCadastroDeVeiculoUI cadastro = new JCadastroDeVeiculoUI();
 		    cadastro.setLogic(appLogica);		   
 				try {
@@ -89,12 +88,18 @@ public class JInicialUI extends JFrame implements VeiculoUIIF, ActionListener{
 			
 		}else
 			if (e.getSource() == consultarMenuItem){
-				JListaDeVeiculo lista = new JListaDeVeiculo();
+				JListaDeVeiculo lista = null;
+				try {
+					lista = new JListaDeVeiculo();
+				} catch (Exception e2) {
+					
+					e2.printStackTrace();
+				}
 				lista.setLogic(appLogica);
 				try {
 					lista.setDisplay();
 				} catch (Exception e1) {
-					// TODO Auto-generated catch block
+					
 					e1.printStackTrace();
 				}
 				System.out.println("consulta");

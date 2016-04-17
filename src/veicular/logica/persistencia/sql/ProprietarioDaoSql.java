@@ -16,6 +16,7 @@ public class ProprietarioDaoSql extends DBDAO implements ProprietarioDaoIF{
 
 	private static final String FINDBYNOME = "select nome, ncs from proprietario where nome = ?";
 	private static final String FINDALL = "select nome, ncs from proprietario";
+	private static final String FINDBYNCS = "select nome, ncs from proprietario where ncs = ?";
 
 	@Override
 	public Collection<Proprietario> findAll() throws SQLException {
@@ -36,7 +37,7 @@ public class ProprietarioDaoSql extends DBDAO implements ProprietarioDaoIF{
 	@Override
 	public Proprietario findByNome(String nome) throws SQLException {
 		Connection conn = this.getConnection();
-		PreparedStatement pstam = conn.prepareStatement(FINDBYNOME);
+		PreparedStatement pstam = conn.prepareStatement(ProprietarioDaoSql.FINDBYNOME);
 		pstam.setString(1, nome);
 		ResultSet rs = pstam.executeQuery();
 		Proprietario proprietario = null;
@@ -48,6 +49,23 @@ public class ProprietarioDaoSql extends DBDAO implements ProprietarioDaoIF{
 		conn.close();
 		return proprietario;
 	}
+
+	@Override
+	public Proprietario findByNCS(String nome) throws SQLException {
+		Connection conn = this.getConnection();
+		PreparedStatement pstam = conn.prepareStatement(ProprietarioDaoSql.FINDBYNCS);
+		pstam.setString(1, nome);
+		ResultSet rs = pstam.executeQuery();
+		Proprietario proprietario = null;
+		if(rs.next())
+			proprietario = new Proprietario(rs.getString("nome"), rs.getString("ncs"));
+		
+		rs.close();
+		pstam.close();
+		conn.close();
+		return proprietario;
+	}
+
 	
 	
 

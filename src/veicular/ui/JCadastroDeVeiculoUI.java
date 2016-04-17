@@ -3,6 +3,7 @@ package veicular.ui;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.util.Collection;
+import java.util.Enumeration;
 import java.util.Vector;
 
 import javax.swing.JFrame;
@@ -13,22 +14,20 @@ import veicular.logica.app.ProprietarioLogica;
 import veicular.logica.app.ProprietarioLogicaIF;
 import veicular.logica.app.VeiculoLogicaIF;
 
+import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.FormSpecs;
-import com.jgoodies.forms.layout.RowSpec;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.JRadioButton;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JScrollPane;
 
 public class JCadastroDeVeiculoUI extends JFrame implements VeiculoUIIF, ActionListener{
 
@@ -41,6 +40,11 @@ public class JCadastroDeVeiculoUI extends JFrame implements VeiculoUIIF, ActionL
 	private JTextField textValor;
 	private JComboBox comboProprietario;
 	private JButton btnConfirmar;
+	private JRadioButton radioAeronave;
+	private JRadioButton radioEmbarcacao;
+	private JRadioButton radioTerrestre;
+	private JRadioButton radioOutro;
+	private ButtonGroup grupoRadio;
 	/**
 	 * Launch the application.
 	 */
@@ -99,8 +103,7 @@ public class JCadastroDeVeiculoUI extends JFrame implements VeiculoUIIF, ActionL
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(52)
-							.addComponent(panelTipo, GroupLayout.PREFERRED_SIZE, 325, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED, 33, Short.MAX_VALUE))
+							.addComponent(panelTipo, GroupLayout.PREFERRED_SIZE, 325, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(3)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -120,7 +123,7 @@ public class JCadastroDeVeiculoUI extends JFrame implements VeiculoUIIF, ActionL
 											.addComponent(textValor, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 										.addComponent(textPlaca, GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
 										.addComponent(comboProprietario, 0, 307, Short.MAX_VALUE)))
-								.addComponent(painelButton, GroupLayout.DEFAULT_SIZE, 419, Short.MAX_VALUE))))
+								.addComponent(painelButton, GroupLayout.DEFAULT_SIZE, 407, Short.MAX_VALUE))))
 					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
@@ -153,16 +156,15 @@ public class JCadastroDeVeiculoUI extends JFrame implements VeiculoUIIF, ActionL
 		btnConfirmar.addActionListener(this);;
 		painelButton.add(btnConfirmar);
 		
-		JRadioButton radioAeronave = new JRadioButton("Aeronave");
+		this.radioAeronave = new JRadioButton("Aeronave");
 		radioAeronave.setSelected(true);
 		
-		JRadioButton radioEmbarcacao = new JRadioButton("Embarca\u00E7\u00E3o");
+		this.radioEmbarcacao = new JRadioButton("Embarca\u00E7\u00E3o");		
+		this.radioTerrestre = new JRadioButton("Terrestre");
 		
-		JRadioButton radioTerrestre = new JRadioButton("Terrestre");
+		this.radioOutro = new JRadioButton("Outro");
 		
-		JRadioButton radioOutro = new JRadioButton("Outro");
-		
-		ButtonGroup grupoRadio = new ButtonGroup();
+		this.grupoRadio = new ButtonGroup();
 		grupoRadio.add(radioOutro);
 		grupoRadio.add(radioEmbarcacao);
 		grupoRadio.add(radioAeronave);
@@ -216,8 +218,9 @@ public class JCadastroDeVeiculoUI extends JFrame implements VeiculoUIIF, ActionL
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == btnConfirmar){
-			try {
-				this.appLogica.addVeiculo(this.textPlaca.getText(), Integer.parseInt(this.textAno.getText()), 1, Double.parseDouble(this.textValor.getText()), (String)this.comboProprietario.getSelectedItem());
+			
+			try {			 
+				this.appLogica.addVeiculo(this.textPlaca.getText(), Integer.parseInt(this.textAno.getText()), verificaRadio(), Double.parseDouble(this.textValor.getText()), (String)this.comboProprietario.getSelectedItem());
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
@@ -225,5 +228,26 @@ public class JCadastroDeVeiculoUI extends JFrame implements VeiculoUIIF, ActionL
 		}
 			
 		
+	}
+
+	private int verificaRadio() {
+		int classe =0;
+		Enumeration<AbstractButton> bg = this.grupoRadio.getElements();
+		while(bg.hasMoreElements()){
+			 JRadioButton jrd = (JRadioButton) bg.nextElement();
+			 if(jrd.isSelected()){
+				 if(jrd.getText() == "Aeronave")
+					 classe =  0;
+				 else
+					 if(jrd.getText() == "Embarcacao")
+						 classe =  1;
+					 else
+						 if(jrd.getText() == "Terrestre")
+							 classe =  2;
+						 else
+							 classe = 3;
+			 }
+		 }
+		return classe;
 	}
 }

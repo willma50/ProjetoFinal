@@ -4,7 +4,8 @@ CREATE TABLE veiculo
   classe integer,
   anofabricacao integer,
   placa character varying(100),
-  valorCompra float
+  valorCompra float,
+  frota integer
 )
 
 CREATE TABLE proprietario

@@ -3,8 +3,8 @@ package veicular.logica.app;
 
 import java.util.Collection;
 
+import veicular.logica.dominio.Veiculo;
 import veicular.logica.persistencia.sql.VeiculoDaoIF;
-
 
 public interface VeiculoLogicaIF {
 
@@ -12,5 +12,8 @@ public interface VeiculoLogicaIF {
 	public Collection<String> findAll() throws Exception;
 	public void setPersistencia(VeiculoDaoIF veiculoDAO);
 	public void removerVeiculo(String placa) throws Exception;
+	public Veiculo buscaPorPlaca(String placa) throws Exception;
+	public Collection<Veiculo> listarVeiculo()throws Exception;
+	public Collection<Veiculo> buscaPorPartesVeiculo(String placa)throws Exception;
 	public int buscaAno();
 }

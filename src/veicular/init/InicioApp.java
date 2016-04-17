@@ -11,7 +11,6 @@ import veicular.ui.VeiculoUIIF;
 
 public class InicioApp {
 
-	//teste
 	   public void run(String fileName) throws Exception{
 	    	Properties prop = new Properties();
 	    	prop.load(new FileReader(fileName));
@@ -22,7 +21,7 @@ public class InicioApp {
 	    	ui.setLogic(app);	    	
 	   		ui.setDisplay(); 
 	    }
-	   
+	
 	public static void main(String[] args) throws Exception{
 		
 		(new InicioApp()).run("config.app");

@@ -1,6 +1,7 @@
 package veicular.logica.app;
 
 
+import java.sql.SQLException;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -15,11 +16,11 @@ import veicular.logica.dominio.Veiculo;
 import veicular.logica.persistencia.sql.ProprietarioDaoIF;
 import veicular.logica.persistencia.sql.ProprietarioDaoSql;
 import veicular.logica.persistencia.sql.VeiculoDaoIF;
-import veicular.logica.persistencia.sql.VeiculoDaoSql;
-
 
 public class VeiculoLogica implements VeiculoLogicaIF{
 	
+	private static final int FROTA_N = 0;
+	private static final int FROTA_S = 1;
 	private VeiculoDaoIF veiculoDao;
 	private ProprietarioDaoIF ProprietarioDao;
 	private FuncoesData funcao;
@@ -37,30 +38,41 @@ public class VeiculoLogica implements VeiculoLogicaIF{
 	}
 	
 	public void addAeronave(String placa, int anoFabricacao, double valorCompra, String nomeProprietario) throws Exception{
-		this.veiculoDao = new VeiculoDaoSql();
+		Aeronave aeronave = null;
 		this.ProprietarioDao = new ProprietarioDaoSql();
 		Proprietario proprietario = this.ProprietarioDao.findByNome(nomeProprietario);
-		Aeronave aeronave = new Aeronave(placa, anoFabricacao, valorCompra, proprietario);
+		System.out.println(proprietario.getNCS());
+		if(this.getQtdVeiculosVinculados(proprietario)){
+			aeronave = new Aeronave(placa, anoFabricacao, valorCompra, proprietario, FROTA_S);
+		}else
+			aeronave = new Aeronave(placa, anoFabricacao, valorCompra, proprietario, FROTA_N);
 		System.out.println("anos: "+aeronave.getBaseCalculo());
 		this.veiculoDao.salvar(aeronave);
 		
 	}
-	
+
 	public void addEmbarcacoes(String placa, int anoFabricacao, double valorCompra, String nomeProprietario) throws Exception{
-		this.veiculoDao = new VeiculoDaoSql();
+		Embarcacoes embarcacoes = null;
 		this.ProprietarioDao = new ProprietarioDaoSql();
 		Proprietario proprietario = this.ProprietarioDao.findByNome(nomeProprietario);
-		Embarcacoes embarcacoes = new Embarcacoes(placa, anoFabricacao, valorCompra, proprietario);
+		if(this.getQtdVeiculosVinculados(proprietario)){
+			embarcacoes = new Embarcacoes(placa, anoFabricacao, valorCompra, proprietario, FROTA_S);
+		}else
+			embarcacoes = new Embarcacoes(placa, anoFabricacao, valorCompra, proprietario, FROTA_N);
 		System.out.println("base de calculo: "+embarcacoes.getBaseCalculo());
 		this.veiculoDao.salvar(embarcacoes);
 	}	
 	
 	
 	public void addTerrestres(String placa, int anoFabricacao, double valorCompra, String nomeProprietario) throws Exception {
-		this.veiculoDao = new VeiculoDaoSql();
+		Terrestres terrestre = null;
 		this.ProprietarioDao = new ProprietarioDaoSql();
 		Proprietario proprietario = this.ProprietarioDao.findByNome(nomeProprietario);
-		Terrestres terrestre = new Terrestres(placa, anoFabricacao, valorCompra, proprietario);
+		if(this.getQtdVeiculosVinculados(proprietario)){
+			terrestre = new Terrestres(placa, anoFabricacao, valorCompra, proprietario, FROTA_S);
+		}else
+			terrestre = new Terrestres(placa, anoFabricacao, valorCompra, proprietario, FROTA_N);
+			
 		System.out.println("base : "+terrestre.getBaseCalculo());
 		this.veiculoDao.salvar(terrestre);
 	}
@@ -81,7 +93,6 @@ public class VeiculoLogica implements VeiculoLogicaIF{
 	@Override
 	public void setPersistencia(VeiculoDaoIF veiculoDAO) {
 		this.veiculoDao = veiculoDAO;
-		
 	}
 
 	@Override
@@ -94,4 +105,26 @@ public class VeiculoLogica implements VeiculoLogicaIF{
 		return (new FuncoesData().getAno());
 	}
 
+	@Override
+	public Collection<Veiculo> listarVeiculo() throws Exception {		
+		return this.veiculoDao.findAll();
+	}
+
+	@Override
+	public Veiculo buscaPorPlaca(String placa) throws Exception {		
+		return this.veiculoDao.findByPlaca(placa);
+	}
+
+	@Override
+	public Collection<Veiculo> buscaPorPartesVeiculo(String placa) throws Exception {		
+		return this.veiculoDao.buscaPorPartesVeiculo(placa);
+	}
+	
+	//colocar um comentário aqui
+	private boolean getQtdVeiculosVinculados(Proprietario proprietario) throws SQLException {
+		if(this.veiculoDao.getVeiculosNCS(proprietario)){
+			return true;
+		}
+			return false;
+	}
 }
