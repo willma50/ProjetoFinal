@@ -1,13 +1,6 @@
 package veicular.logica.dominio;
 
-import java.io.FileReader;
-import java.util.Properties;
 
-import veicular.init.InicioApp;
-import veicular.logica.app.VeiculoLogicaIF;
-import veicular.logica.persistencia.sql.DAFIndividualDaoSql;
-import veicular.logica.persistencia.sql.VeiculoDaoIF;
-import veicular.ui.VeiculoUIIF;
 
 public class DAFIndividual {
 	private long numDAFIndividual=0;

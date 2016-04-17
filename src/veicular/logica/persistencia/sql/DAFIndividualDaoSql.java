@@ -9,7 +9,7 @@ import java.text.ParseException;
 import veicular.logica.persistencia.sql.DBDAO;
 import veicular.funcoes.FuncoesData;
 import veicular.logica.dominio.DAFIndividual;
-import veicular.logica.dominio.Terrestres;
+import veicular.logica.dominio.Veiculo;
 
 
 public class DAFIndividualDaoSql extends DBDAO{
@@ -18,10 +18,12 @@ public class DAFIndividualDaoSql extends DBDAO{
 		
 		public DAFIndividual buscarPlaca(String placa) throws ClassNotFoundException, SQLException, ParseException {
 			DAFIndividual dafI = null;
-			Terrestres v = new Terrestres(placa, 0, 0, null);
+			VeiculoDaoSql VeiculoDaoSql = new VeiculoDaoSql();
+			Veiculo v = VeiculoDaoSql.findByPlaca(placa);
+			
 			Double aliquota = v.getAliquota();
 			Double baseCalculo = v.getBaseCalculo();
-			Double impostoDevido = v.getImpostoDevido();
+			Double impostoDevido = v.getimpostoDevido();
 			Connection conn = this.getConnection();
 			PreparedStatement pstam = conn.prepareStatement(FINDBYPLACA);
 			pstam.setString(1, placa);
