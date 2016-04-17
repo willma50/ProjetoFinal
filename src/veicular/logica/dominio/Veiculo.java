@@ -12,6 +12,7 @@ public abstract class Veiculo {
 	private Double aliquota;
 	private Double impostoDevido;
 	private FuncoesData funcao;
+	private int frota;
 	
 	public Veiculo(){
 		
@@ -89,7 +90,12 @@ public abstract class Veiculo {
 
 	public Double getimpostoDevido() {
 		// TODO Auto-generated method stub
-		return this.impostoDevido;
+		return this.aliquota;
+	}
+
+	public int getFrota() {
+		// TODO Auto-generated method stub
+		return this.frota;
 	}
 	
 	

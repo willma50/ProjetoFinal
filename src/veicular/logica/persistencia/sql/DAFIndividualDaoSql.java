@@ -14,12 +14,12 @@ import veicular.logica.dominio.Veiculo;
 
 public class DAFIndividualDaoSql extends DBDAO{
 		
-		private static final String FINDBYPLACA = "select DESCRICAO, CLASSE, PLACA, ANOFABRICACAO, valorCompra from veiculo where PLACA = ?";
+		private static final String FINDBYPLACA = "select CLASSE, PLACA, ANOFABRICACAO, valorCompra from veiculo where PLACA = ?";
 		
-		public DAFIndividual buscarPlaca(String placa) throws ClassNotFoundException, SQLException, ParseException {
+		public DAFIndividual buscarPlaca(String placa) throws ClassNotFoundException, Exception, SQLException, ParseException {
 			DAFIndividual dafI = null;
-			VeiculoDaoSql VeiculoDaoSql = new VeiculoDaoSql();
-			Veiculo v = VeiculoDaoSql.findByPlaca(placa);
+			VeiculoDaoIF VSql = new VeiculoDaoSql();
+			Veiculo v = VSql.findByPlaca(placa);
 			
 			Double aliquota = v.getAliquota();
 			Double baseCalculo = v.getBaseCalculo();

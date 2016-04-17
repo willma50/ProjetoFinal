@@ -3,7 +3,6 @@ package veicular.logica.dominio;
 
 
 public class DAFIndividual {
-	private long numDAFIndividual=0;
 	private String placa;
 	private int anoFabricacao;
 	private String data;
@@ -13,7 +12,6 @@ public class DAFIndividual {
 	private Double impostoDevido;
 
 	public DAFIndividual(String placa, int anoFabricacao, String data, int classe, Double baseCalculo, Double aliquota, Double impostoDevido) {
-		this.numDAFIndividual++;
 		this.setPlaca(placa);
 		this.setAnoFabricacao(anoFabricacao);
 		this.setData(data);
@@ -24,13 +22,7 @@ public class DAFIndividual {
 		
 	}
 
-	public long getNumDAFIndividual() {
-		return numDAFIndividual;
-	}
 
-	public void setNumDAFIndividual(long numDAFIndividual) {
-		this.numDAFIndividual = numDAFIndividual;
-	}
 
 	public String getPlaca() {
 		return placa;
@@ -89,11 +81,10 @@ public class DAFIndividual {
 	}
 	
 	public String toString(){
-		String imprime =  "Cod de emissão: " + this.numDAFIndividual + '\n';
-		imprime+= "Placa :" + this.placa + "\n";
+		String imprime =  "Placa :" + this.placa + "\n";
 		imprime+= "Ano de fabricação :" + this.anoFabricacao + "\n";
 		imprime+= "Data de pagamento: " + this.data + "\n";
-		imprime+= "Classe do veículo" + this.classe + "\n";
+		imprime+= "Classe do veículo :" + this.classe + "\n";
 		imprime+= "Base de calculo" +  this.baseCalculo + "\n";
 		imprime+= "Aliquota :" + this.aliquota + "\n";
 		imprime+= "Imposto :" + this.impostoDevido + "\n";

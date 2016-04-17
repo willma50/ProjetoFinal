@@ -18,5 +18,9 @@ public class Aeronave extends Veiculo{
 	public double setImpostoDevido() {
 		return Aeronave.aliquota * this.getBaseCalculo();
 	}
+	
+	public Double getAliquota(){
+		return Aeronave.aliquota;
+	}
 
 }

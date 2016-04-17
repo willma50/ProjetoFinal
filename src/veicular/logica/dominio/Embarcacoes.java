@@ -6,7 +6,7 @@ public class Embarcacoes extends Veiculo{
 	
 	public Embarcacoes(String placa,
 			int anoFabricacao, double  valorCompra, Proprietario proprietario, int frota) {
-		super(placa, anoFabricacao, valorCompra, proprietario, frota);
+		super(placa, anoFabricacao, valorCompra, proprietario);
 	}
 
 	public Embarcacoes(String placa, int anoFabricacao, double  valorCompra, Proprietario proprietario){
@@ -17,5 +17,8 @@ public class Embarcacoes extends Veiculo{
 	public double setImpostoDevido() {
 		return Embarcacoes.aliquota * this.getBaseCalculo();
 	}
-
+	
+	public Double getAliquota(){
+		return Embarcacoes.aliquota;
+	}
 }

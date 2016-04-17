@@ -127,4 +127,12 @@ public class VeiculoLogica implements VeiculoLogicaIF{
 		}
 			return false;
 	}
+
+	public FuncoesData getFuncao() {
+		return funcao;
+	}
+
+	public void setFuncao(FuncoesData funcao) {
+		this.funcao = funcao;
+	}
 }
