@@ -7,7 +7,7 @@ import java.util.Date;
 
 public class FuncoesData {
 
-	public String getDate() throws ParseException{
+	public static String getDate() throws ParseException{
 		
 		Date data1 = new Date(System.currentTimeMillis()); // teste1
 		

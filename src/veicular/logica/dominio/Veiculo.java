@@ -80,6 +80,16 @@ public abstract class Veiculo {
 	public void setProprietario(Proprietario proprietario) {
 		this.proprietario = proprietario;
 	}
+
+	public Double getAliquota() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Double getImpostoDevido() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 }
