@@ -12,7 +12,7 @@ public class Adaptados extends Veiculo{
 	//isento
 	@Override
 	public double setImpostoDevido() {
-		return 0;
+		return this.getImpostoDevido();
 	}
 
 }

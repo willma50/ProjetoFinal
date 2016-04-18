@@ -147,13 +147,15 @@ public class VeiculoLogica implements VeiculoLogicaIF{
 		Double somaImposto = (double) 0;
 		while(itV.hasNext()){
 			Veiculo v =itV.next();
-			somaImposto+=v.getImpostoDevido();
+			if(v.getClasse()!=3){
+				somaImposto+=v.getImpostoDevido();
+			}
 		}
 		somaImposto = calcDescontoImposto(somaImposto);
 		return somaImposto;		
 	}
 	public Double valorMedioImpostoFrota(String numCSProprietario) throws Exception{
-		VeiculoDaoIF vDao = new VeiculoDaoSql();
+		VeiculoDaoIF vDao = null;
 		ArrayList<Veiculo> listVeiculo = new ArrayList<Veiculo>();		
 		listVeiculo = vDao.findByProprietario(numCSProprietario);
 		Iterator<Veiculo> itV = listVeiculo.iterator();
@@ -162,7 +164,9 @@ public class VeiculoLogica implements VeiculoLogicaIF{
 		while(itV.hasNext()){
 			cont++;
 			Veiculo v =itV.next();
-			mediaImposto+=v.getImpostoDevido();
+			if(v.getClasse()!=3){
+				mediaImposto+=v.getImpostoDevido();
+			}
 		}
 		mediaImposto = calcDescontoImposto(mediaImposto);
 		return mediaImposto/cont;		

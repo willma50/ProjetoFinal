@@ -1,14 +1,11 @@
 package veicular.logica.app;
 
 
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 import veicular.funcoes.FuncoesData;
 import veicular.logica.dominio.DAFFrota;
-import veicular.logica.dominio.Proprietario;
 import veicular.logica.dominio.Veiculo;
 import veicular.logica.persistencia.sql.VeiculoDaoSql;
 
