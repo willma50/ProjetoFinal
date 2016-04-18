@@ -2,7 +2,7 @@ package veicular.logica.dominio;
 
 public class Aeronave extends Veiculo{
 
-	private static final double aliquota = 2.5;
+	private static final double aliquota = 0.025;
 	
 	public Aeronave(String placa,
 			int anoFabricacao, double  valorCompra, Proprietario proprietario, int frota) {
@@ -15,7 +15,7 @@ public class Aeronave extends Veiculo{
 	}
 
 	@Override
-	public double setImpostoDevido() {
+	public Double getImpostoDevido() {
 		return Aeronave.aliquota * this.getBaseCalculo();
 	}
 	

@@ -8,6 +8,8 @@ CREATE TABLE veiculo
   frota integer
 )
 
+
+
 CREATE TABLE proprietario
 (
   nome character varying(200) NOT NULL,

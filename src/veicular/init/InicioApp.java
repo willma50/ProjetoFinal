@@ -21,11 +21,10 @@ public class InicioApp {
 	    	ui.setLogic(app);	    	
 	   		ui.setDisplay(); 
 	    }
-	
+
 	public static void main(String[] args) throws Exception{
 		
 		(new InicioApp()).run("config.app");
 		InicioApp app = new InicioApp();
-  
 	}
 }

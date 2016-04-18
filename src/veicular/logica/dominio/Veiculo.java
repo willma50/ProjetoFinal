@@ -5,7 +5,7 @@ import veicular.funcoes.FuncoesData;
 public abstract class Veiculo {
 	
 	private int id;
-	private String placa;
+	protected String placa;
 	private int anoFabricacao;
 	private double valorCompra;
 	private Proprietario proprietario;
@@ -13,6 +13,8 @@ public abstract class Veiculo {
 	private Double impostoDevido;
 	private FuncoesData funcao;
 	private int frota;
+	private int classe;
+	private long numInscFiscal; //tem que add ao construtor e ao banco
 	
 	public Veiculo(){
 		
@@ -30,7 +32,9 @@ public abstract class Veiculo {
 		this.setAnoFabricacao(anoFabricacao);		
 	}
 	
-	public abstract double setImpostoDevido();
+	public double setImpostoDevido() {
+		return this.impostoDevido;
+	}
 	
 	public double getBaseCalculo(){
 		double base = 0, valor = this.getValorCompra();
@@ -60,7 +64,7 @@ public abstract class Veiculo {
 	}
 	
 	public String getPlaca() {
-		return placa;
+		return this.placa;
 	}
 	
 	public void setPlaca(String placa) {
@@ -76,7 +80,7 @@ public abstract class Veiculo {
 	}
 
 	public Proprietario getProprietario() {
-		return proprietario;
+		return this.proprietario;
 	}
 
 	public void setProprietario(Proprietario proprietario) {
@@ -84,18 +88,40 @@ public abstract class Veiculo {
 	}
 
 	public Double getAliquota() {
-		// TODO Auto-generated method stub
 		return this.aliquota;
 	}
 
-	public Double getimpostoDevido() {
-		// TODO Auto-generated method stub
-		return this.aliquota;
+	public Double getImpostoDevido() {
+		//this.impostoDevido = aliquota*this.getBaseCalculo(); 
+		return this.impostoDevido;
 	}
 
 	public int getFrota() {
-		// TODO Auto-generated method stub
 		return this.frota;
+	}
+
+	public FuncoesData getFuncao() {
+		return funcao;
+	}
+
+	public void setFuncao(FuncoesData funcao) {
+		this.funcao = funcao;
+	}
+
+	public int getClasse() {
+		return this.classe;
+	}
+
+	public void setClasse(int classe) {
+		this.classe = classe;
+	}
+
+	public long getNumInscFiscal() {
+		return numInscFiscal;
+	}
+
+	public void setNumInscFiscal(long numInscFiscal) {
+		this.numInscFiscal = numInscFiscal;
 	}
 	
 	

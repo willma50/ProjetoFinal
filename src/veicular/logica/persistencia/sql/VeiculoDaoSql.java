@@ -29,6 +29,7 @@ public class VeiculoDaoSql extends DBDAO implements VeiculoDaoIF{
 	private static final String INSERT_VEICULO = "INSERT INTO VEICULO (PLACA, ANOFABRICACAO, CLASSE, valorCompra, proprietario, frota) VALUES (?, ?, ?, ?, ?, ?)";
 	private static final String UPDATE_VEICULO = "UPDATE veiculo SET ANOFABRICACAO = ?, frota = ?  where PLACA = ?";
 	private static final String FINDBYNOME = "select CLASSE, PLACA, ANOFABRICACAO, valorCompra, proprietario from veiculo where PLACA = ?";
+	private static final String FINDBYPROPRIETARIO = "select CLASSE, PLACA, ANOFABRICACAO, valorCompra, proprietario from veiculo where proprietario = ?";
 	private static final String FINDALL = "select CLASSE, PLACA, ANOFABRICACAO, valorCompra, proprietario, frota from veiculo";
 	private static final String FINDALL_PARTES = "select CLASSE, PLACA, ANOFABRICACAO, valorCompra, proprietario from veiculo where placa like % ? % ";
 	private static final String DELETE = "delete from veiculo where placa = ?";
@@ -118,6 +119,31 @@ public class VeiculoDaoSql extends DBDAO implements VeiculoDaoIF{
 		
 		return veiculo;
 	}
+
+	public ArrayList<Veiculo> findByProprietario(String proprietario) throws ClassNotFoundException, SQLException {
+		Connection conn = this.getConnection();
+		PreparedStatement pstam = conn.prepareStatement(FINDBYPROPRIETARIO);
+		pstam.setString(1, proprietario);
+		ResultSet rs = pstam.executeQuery();
+		ArrayList<Veiculo> veiculos = new ArrayList<Veiculo>();
+		
+		while(rs.next()){			
+			proprietarioDao = new ProprietarioDaoSql();
+			if(rs.getInt("CLASSE") == 0)			
+				veiculos.add(new Aeronave(rs.getString("PLACA"), rs.getInt("ANOFABRICACAO"), rs.getDouble("valorCompra"), proprietarioDao.findByNome(rs.getString("proprietario"))));			
+			else if(rs.getInt("CLASSE") == 1	)		
+				veiculos.add(new Embarcacoes(rs.getString("PLACA"), rs.getInt("ANOFABRICACAO"), rs.getDouble("valorCompra"), proprietarioDao.findByNome(rs.getString("proprietario"))));
+			else if(rs.getInt("CLASSE") == 2	)		
+				veiculos.add(new Terrestres(rs.getString("PLACA"), rs.getInt("ANOFABRICACAO"), rs.getDouble("valorCompra"), proprietarioDao.findByNome(rs.getString("proprietario"))));
+						
+		}	
+		rs.close();
+		pstam.close();
+		conn.close();
+		
+		return veiculos;
+	}
+	
 
 	@Override
 	public Collection<Veiculo> findAll() throws ClassNotFoundException, SQLException {

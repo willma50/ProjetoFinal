@@ -2,6 +2,7 @@ package veicular.logica.app;
 
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -16,6 +17,7 @@ import veicular.logica.dominio.Veiculo;
 import veicular.logica.persistencia.sql.ProprietarioDaoIF;
 import veicular.logica.persistencia.sql.ProprietarioDaoSql;
 import veicular.logica.persistencia.sql.VeiculoDaoIF;
+import veicular.logica.persistencia.sql.VeiculoDaoSql;
 
 public class VeiculoLogica implements VeiculoLogicaIF{
 	
@@ -89,7 +91,7 @@ public class VeiculoLogica implements VeiculoLogicaIF{
 		
 		return placaVeiculo;
 	}
-
+	
 	@Override
 	public void setPersistencia(VeiculoDaoIF veiculoDAO) {
 		this.veiculoDao = veiculoDAO;
@@ -135,4 +137,53 @@ public class VeiculoLogica implements VeiculoLogicaIF{
 	public void setFuncao(FuncoesData funcao) {
 		this.funcao = funcao;
 	}
+	
+	
+	public Double valorTotalImpostoFrota(String numCSProprietario) throws Exception{
+		VeiculoDaoIF vDao = new VeiculoDaoSql();
+		ArrayList<Veiculo> listVeiculo = new ArrayList<Veiculo>();		
+		listVeiculo = vDao.findByProprietario(numCSProprietario);
+		Iterator<Veiculo> itV = listVeiculo.iterator();
+		Double somaImposto = (double) 0;
+		while(itV.hasNext()){
+			Veiculo v =itV.next();
+			somaImposto+=v.getImpostoDevido();
+		}
+		somaImposto = calcDescontoImposto(somaImposto);
+		return somaImposto;		
+	}
+	public Double valorMedioImpostoFrota(String numCSProprietario) throws Exception{
+		VeiculoDaoIF vDao = new VeiculoDaoSql();
+		ArrayList<Veiculo> listVeiculo = new ArrayList<Veiculo>();		
+		listVeiculo = vDao.findByProprietario(numCSProprietario);
+		Iterator<Veiculo> itV = listVeiculo.iterator();
+		Double mediaImposto = (double) 0;
+		int cont=0;
+		while(itV.hasNext()){
+			cont++;
+			Veiculo v =itV.next();
+			mediaImposto+=v.getImpostoDevido();
+		}
+		mediaImposto = calcDescontoImposto(mediaImposto);
+		return mediaImposto/cont;		
+	}
+		
+		
+	public Double calcDescontoImposto(Double imposto){	
+		Double desconto = imposto*0.05;
+		return imposto-desconto;
+	}
+		
+	
+	/*
+public static void main(String[] args) throws Exception {
+	VeiculoLogica v = new VeiculoLogica();
+	
+	System.out.println(v.valorMedioImpostoFrota("Joao"));
 }
+
+*/
+}
+
+	
+
